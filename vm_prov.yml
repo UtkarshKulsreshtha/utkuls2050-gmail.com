@@ -23,5 +23,5 @@
       networks:
       - name: VMvLan10
         type: dhcp
-      state: present
+      state: poweredoff
       wait_for_ip_address: yes
