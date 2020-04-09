@@ -1,0 +1,27 @@
+---
+- hosts: localhost
+  gather_facts: no
+  vars:
+    vcenter_server: "10.0.88.202"
+    vcenter_user: "clouduser@vcN.Local"
+    vcenter_pass: "gsLab!23"
+    datacenter_name: "DC-1"
+    cluster_name: "Cluster-1"
+  tasks:
+  - name: Clone the template
+    vmware_guest:
+      hostname: "{{ vcenter_server }}"
+      username: "{{ vcenter_user }}"
+      password: "{{ vcenter_pass }}"
+      validate_certs: False
+      name: test_vm1
+      template: tmpl_ubuntu-18.04.3-LTS
+      datacenter: "{{ datacenter_name }}"
+      folder: /{{ datacenter_name }}/vm
+      cluster: "{{ cluster_name }}"
+      datastore: "NFS_vcN-Default"
+      networks:
+      - name: VMvLan10
+        type: dhcp
+      state: present
+      wait_for_ip_address: yes
