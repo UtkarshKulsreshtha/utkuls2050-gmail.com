@@ -1,0 +1,20 @@
+---
+- hosts: localhost
+  connection: local
+  tasks:
+  - name: launching ec2
+    ec2:
+      aws_access_key: AKIAJV6XLPJHCWRZHKYA
+      aws_secret_key: 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
+      key_name: ubuntu2
+      instance_type: t2.micro
+      image: ami-07c1207a9d40bc3bd
+      region: us-east-2
+      wait: yes
+      group: default
+      count: 1
+      vpc_subnet_id: subnet-b61d06de
+      assign_public_ip: yes
+    register: ec2info
+  - debug:
+      var: "ec2info.instances"
