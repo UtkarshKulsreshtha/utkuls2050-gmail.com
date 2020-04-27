@@ -1,5 +1,6 @@
 ---
-- hosts: all
+- hosts: localhost
+  connection: local
   gather_facts: no
   vars:
     vcenter_server: "10.0.88.202"
@@ -14,7 +15,7 @@
       username: "{{ vcenter_user }}"
       password: "{{ vcenter_pass }}"
       validate_certs: False
-      name: test_vm2
+      name: test_vm03
       template: tmpl_ubuntu-18.04.3-LTS
       datacenter: "{{ datacenter_name }}"
       folder: /{{ datacenter_name }}/vm
