@@ -1,0 +1,53 @@
+---
+- hosts: localhost
+  connection: local
+#  become: yes
+  gather_facts: no
+  vars:
+    vcenter_server: "10.0.88.202"
+    vcenter_user: "clouduser@vcN.Local"
+    vcenter_pass: "gsLab!23"
+    datacenter_name: "DC-1"
+    cluster_name: "Cluster-1"
+    state: present
+
+  tasks:
+  - name: Clone the template
+    vmware_guest:
+      hostname: "{{ vcenter_server }}"
+      username: "{{ vcenter_user }}"
+      password: "{{ vcenter_pass }}"
+      validate_certs: False
+      name: test_vm03
+      template: tmpl_ubuntu-18.04.3-LTS
+      datacenter: "{{ datacenter_name }}"
+      folder: /{{ datacenter_name }}/vm
+      cluster: "{{ cluster_name }}"
+      datastore: "NFS_vcN-Default"
+      networks:
+      - name: VMvLan10
+        type: dhcp
+      state: "{{ state }}"
+      wait_for_ip_address: yes
+    register: facts
+  
+  - name: set var
+    set_fact:
+      ipaddress: "{{ facts.instance.hw_eth0.ipaddresses[0] }}"
+    when: state == "present"
+  - name : display
+    debug:
+      msg: "{{ ipaddress }}"     
+    when: state == "present" 
+ 
+  
+  - name: adding {{ ipaddress }} to inventory
+    lineinfile:
+      path: /etc/ansible/hosts 
+      insertafter: '^\[web\]'
+      line: "{{ ipaddress }}"
+      mode: 0777 
+    when: state == "present"
+       
+    
+
