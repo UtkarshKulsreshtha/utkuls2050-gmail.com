@@ -10,6 +10,7 @@
     datacenter_name: "DC-1"
     cluster_name: "Cluster-1"
     state: present
+    ansible_become_pass: "lucky@123"
 
   tasks:
   - name: Clone the template
