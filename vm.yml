@@ -44,7 +44,7 @@
   
   - name: adding {{ ipaddress }} to inventory
     lineinfile:
-      path: /etc/ansible/hosts 
+      path: host1.ini 
       insertafter: '^\[web\]'
       line: "{{ ipaddress }}"
       mode: 0777 
