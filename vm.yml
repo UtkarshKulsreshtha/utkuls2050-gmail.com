@@ -4,11 +4,13 @@
   gather_facts: no
   vars:
     vcenter_server: "10.0.88.202"
-    vcenter_user: "clouduser@vcN.Local"
-    vcenter_pass: "gsLab!23"
+    vcenter_user: "xyz"
+    vcenter_pass: "xyz"
     datacenter_name: "DC-1"
     cluster_name: "Cluster-1"
     state: present
+    name: "test_vm04"
+    
 
   tasks:
   - name: Clone the template
@@ -17,7 +19,7 @@
       username: "{{ vcenter_user }}"
       password: "{{ vcenter_pass }}"
       validate_certs: False
-      name: test_vm04
+      name: "{{name}}"
       template: tmpl_ubuntu-18.04.3-LTS
       datacenter: "{{ datacenter_name }}"
       folder: /{{ datacenter_name }}/vm
