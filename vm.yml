@@ -1,6 +1,5 @@
 ---
-- hosts: localhost
-  connection: local
+- hosts: local
  # become: yes
   gather_facts: no
   vars:
@@ -10,7 +9,6 @@
     datacenter_name: "DC-1"
     cluster_name: "Cluster-1"
     state: present
-    ansible_become_pass: "lucky@123"
 
   tasks:
   - name: Clone the template
@@ -44,7 +42,7 @@
   
   - name: adding {{ ipaddress }} to inventory
     lineinfile:
-      path: host1.ini 
+      path: /etc/ansible/hosts
       insertafter: '^\[web\]'
       line: "{{ ipaddress }}"
       mode: 0777 
