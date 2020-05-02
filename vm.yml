@@ -42,7 +42,7 @@
     when: state == "present" 
  
   
-  - name: adding {{ ipaddress }} to inventory
+  - name: adding {{ ipaddress }} to the inventory
     lineinfile:
       path: /etc/ansible/hosts
       insertafter: '^\[web\]'
